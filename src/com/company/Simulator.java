@@ -7,6 +7,13 @@ public class Simulator {
     private int runningType;//0：single 1:complete
     private Controller controller;
 
+    public Simulator(){
+        this.Registers = new Register[32];
+        for (int i = 0; i < 32; i++) {
+            Registers[i] = new Register("R" + (i + 1), Integer.toHexString(i * 4), 0);
+        }
+    }
+
     public Simulator(String[] instructions,int dataMemorysize,int runningType){
         this.InstMemory = new InstructionMemory(instructions);
         this.DataMemory = new DataMemory(dataMemorysize);
@@ -22,5 +29,9 @@ public class Simulator {
             controller.memoryAccess();
             controller.writeBack();
         }
+    }
+
+    public Register getRegisterAtIndex(int index){
+        return Registers[index];
     }
 }

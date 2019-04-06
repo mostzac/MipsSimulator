@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 public class GUI {
 
-    Register[] registers;
+    //Register[] registers;
     int stepCounter;
     JFrame frame;
     JLabel label, currentInstruction;
@@ -18,10 +18,12 @@ public class GUI {
     Simulator simulator;
 
     public GUI() {
+        this.simulator = new Simulator();
         stepCounter = 1;
         setComponents();
         setFrame();
         open();
+        //initialize simulator
     }
 
     private void open() {
@@ -117,12 +119,11 @@ public class GUI {
     }
 
     private void setInitVals() {
-        registers = new Register[32];
         for (int i = 0; i < 32; i++) {
-            registers[i] = new Register("R" + (i+1), Integer.toHexString(i*4), 0);
-            regTable.setValueAt(registers[i].getRegisterName(), i, 0);
-            regTable.setValueAt(registers[i].getRegisterLocation(), i, 1);
-            regTable.setValueAt(registers[i].getRegisterValue(), i, 2);
+            Register cur = simulator.getRegisterAtIndex(i);
+            regTable.setValueAt(cur.getRegisterName(), i, 0);
+            regTable.setValueAt(cur.getRegisterLocation(), i, 1);
+            regTable.setValueAt(cur.getRegisterValue(), i, 2);
         }
     }
 }
