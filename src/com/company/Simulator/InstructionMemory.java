@@ -1,4 +1,6 @@
-package com.company;
+package com.company.Simulator;
+
+import com.company.Instruction;
 
 public class InstructionMemory {
     //Taking Add R1,R2,R3

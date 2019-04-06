@@ -1,4 +1,6 @@
-package com.company;
+package com.company.Simulator;
+
+import com.company.Controller;
 
 public class Simulator {
     private InstructionMemory InstMemory;

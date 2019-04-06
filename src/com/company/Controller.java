@@ -1,6 +1,11 @@
 package com.company;
 
 
+import com.company.Function.Arithmetic;
+import com.company.Function.Conditional;
+import com.company.Function.Function;
+import com.company.Function.Memory;
+
 import java.util.HashSet;
 
 public class Controller {

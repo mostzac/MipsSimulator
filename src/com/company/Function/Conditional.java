@@ -1,4 +1,6 @@
-package com.company;
+package com.company.Function;
+
+import com.company.Simulator.Register;
 
 public class Conditional implements Function{
 

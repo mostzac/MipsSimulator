@@ -1,4 +1,4 @@
-package com.company;
+package com.company.Simulator;
 
 public class DataMemory {
     private int[] dataMemory;

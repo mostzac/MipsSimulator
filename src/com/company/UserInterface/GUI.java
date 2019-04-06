@@ -1,8 +1,12 @@
-package com.company;
+package com.company.UserInterface;
+
+import com.company.Simulator.Register;
+import com.company.Simulator.Simulator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUI {
 
@@ -42,7 +46,7 @@ public class GUI {
 
     private void setFrame() {
         frame = new JFrame();
-        frame.setSize(900,900);
+        frame.setSize(900, 900);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
         frame.add(label);
@@ -59,7 +63,7 @@ public class GUI {
 
     private void setComponents() {
         label = new JLabel();
-        label.setBounds(2,600,100,20);
+        label.setBounds(2, 600, 100, 20);
         label.setText("Enter file name:");
         fileText = new JTextField();
         fileText.setBounds(102, 600, 100, 20);
@@ -67,14 +71,14 @@ public class GUI {
         browse.setBounds(205, 600, 80, 20);
         browse.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Browsing . . .");
-            }
+                browse_program();
+            } //
         });
         load = new JButton("Load");
         load.setBounds(290, 600, 80, 20);
         load.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Loading . . .");
+                load_program();
             }
         });
         stepRun = new JRadioButton("Step Run");
@@ -95,18 +99,14 @@ public class GUI {
         step.setBounds(307, 625, 80, 20);
         step.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Step " + stepCounter + " . . .");
-                currentInstruction.setText("Step " + stepCounter + " . . .");
-                stepCounter++;
+                step_run();
             }
         });
         run = new JButton("Run");
         run.setBounds(390, 625, 80, 20);
         run.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Running . . .");
-                currentInstruction.setText("Running . . .");
-                stepCounter = 0;
+                complete_run();
             }
         });
         regTable = new JTable(32, 3);
@@ -126,5 +126,24 @@ public class GUI {
             regTable.setValueAt(cur.getRegisterValue(), i, 2);
         }
     }
+
+    private void browse_program() {
+        System.out.println("Browsing . . .");
+    }
+    private void load_program() {
+        System.out.println("Loading . . .");
+    }
+    private void step_run(){
+        System.out.println("Step " + stepCounter + " . . .");
+        currentInstruction.setText("Step " + stepCounter + " . . .");
+        stepCounter++;
+    }
+    private void complete_run(){
+        System.out.println("Running . . .");
+        currentInstruction.setText("Running . . .");
+        stepCounter = 0;
+    }
+
+
 }
 

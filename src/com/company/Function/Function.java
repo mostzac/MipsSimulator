@@ -1,4 +1,4 @@
-package com.company;
+package com.company.Function;
 
 public interface Function{
     void execute();
