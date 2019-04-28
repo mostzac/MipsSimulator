@@ -125,7 +125,7 @@ public class GUI {
                 currentInstruction.setText(instructions[stepCounter].getInstruction());
                 controller.performNextInstruction(instructions[stepCounter]);
                 updateTable();
-                stepCounter++;
+//                stepCounter++;
             }
         });
         run = new JButton("Run");
@@ -180,4 +180,6 @@ public class GUI {
     public static void setRegister(int index,int value){registers[index].setRegisterValue(value);}
 
     public static int getStepCounter(){return stepCounter;}
+
+    public static void StepCounterIncrease(){stepCounter++;}
 }

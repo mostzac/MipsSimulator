@@ -92,12 +92,18 @@ public class Conditional implements Function {
         if (val1 == val2) {
             GUI.offsetStepCounter(offset);
         }
+        else{
+            GUI.StepCounterIncrease();
+        }
     }
 
     // BGEZ function, branchs if register >= 0
     private void BGEZ() {
         if (val1 >= 0) {
             GUI.offsetStepCounter(offset);
+        }
+        else{
+            GUI.StepCounterIncrease();
         }
     }
 
@@ -107,12 +113,18 @@ public class Conditional implements Function {
             GUI.setRegister(31, GUI.getStepCounter()+1);
             GUI.offsetStepCounter(offset);
         }
+        else{
+            GUI.StepCounterIncrease();
+        }
     }
 
     // BGTZ function, branches if the register > 0
     private void BGTZ() {
         if (val1 > 0) {
             GUI.offsetStepCounter(offset);
+        }
+        else{
+            GUI.StepCounterIncrease();
         }
     }
 
@@ -121,12 +133,18 @@ public class Conditional implements Function {
         if (val1 <= 0) {
             GUI.offsetStepCounter(offset);
         }
+        else{
+            GUI.StepCounterIncrease();
+        }
     }
 
     // BLTZ fucntion, breanches if the register < 0
     private void BLTZ() {
         if (val1 < 0) {
             GUI.offsetStepCounter(offset);
+        }
+        else{
+            GUI.StepCounterIncrease();
         }
     }
 
@@ -135,7 +153,9 @@ public class Conditional implements Function {
         if (val1 < 0) {
             GUI.setRegister(31, GUI.getStepCounter()+1);
             GUI.offsetStepCounter(offset);
-
+        }
+        else{
+            GUI.StepCounterIncrease();
         }
     }
 
@@ -143,6 +163,9 @@ public class Conditional implements Function {
     private void BNQ() {
         if (val1 != val2) {
             GUI.offsetStepCounter(offset);
+        }
+        else{
+            GUI.StepCounterIncrease();
         }
     }
 
