@@ -11,7 +11,7 @@ import java.awt.event.*;
 
 public class GUI {
 
-    static Register[] registers;
+    static public Register[] registers;
     static int stepCounter;
     JFrame frame;
     JLabel label, currentInstruction;
@@ -19,8 +19,8 @@ public class GUI {
     JButton browse, load, step, run;
     JRadioButton stepRun, fullRun;
     JTable regTable;
-    Controller controller;
-    static Instruction[] instructions;
+    public Controller controller;
+    static public Instruction[] instructions;
 
     public GUI() {
         stepCounter = 0;
@@ -164,4 +164,6 @@ public class GUI {
     public static Register[] getRegisterFile(){return registers;}
 
     public static void setRegister(int index,int value){registers[index].setRegisterValue(value);}
+
+    public static int getSetpCounter(){return stepCounter;}
 }
