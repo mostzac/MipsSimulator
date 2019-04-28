@@ -61,6 +61,15 @@ public class Conditional implements Function {
             if (vals.size() == 2) {
                 String reg1 = vals.get(0).toString();
                 Register register = GUI.registers[Integer.parseInt(reg1.substring(1))];
+                val1 = register.getRegisterValue();
+                String reg2 = vals.get(1).toString();
+                register = GUI.registers[Integer.parseInt(reg2.substring(1))];
+                val2 = register.getRegisterValue();
+            }
+            if(vals.size()==1){
+                String reg1 = vals.get(0).toString();
+                Register register = GUI.registers[Integer.parseInt(reg1.substring(1))];
+                val1 = register.getRegisterValue();
             }
         } else if (addressing.contains(function)) {
 
