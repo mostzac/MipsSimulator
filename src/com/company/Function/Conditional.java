@@ -58,21 +58,26 @@ public class Conditional implements Function {
         String function = instr.getFunction();
         ArrayList vals = instr.getVals();
         if (offsetting.contains(function)) {
-            if (vals.size() == 2) {
+            if (vals.size() == 3) {
                 String reg1 = vals.get(0).toString();
                 Register register = GUI.registers[Integer.parseInt(reg1.substring(1))];
                 val1 = register.getRegisterValue();
                 String reg2 = vals.get(1).toString();
                 register = GUI.registers[Integer.parseInt(reg2.substring(1))];
                 val2 = register.getRegisterValue();
+                offset = Integer.parseInt(String.valueOf(vals.get(2)));
             }
-            if(vals.size()==1){
+            if(vals.size()==2){
                 String reg1 = vals.get(0).toString();
                 Register register = GUI.registers[Integer.parseInt(reg1.substring(1))];
                 val1 = register.getRegisterValue();
+                offset = Integer.parseInt(String.valueOf(vals.get(1)));
+            }
+            if(vals.size()==1){
+                address = Integer.parseInt(String.valueOf(vals.get(0)));
             }
         } else if (addressing.contains(function)) {
-
+            offset = Integer.parseInt(String.valueOf(vals.get(1)));
         } else {
             val1 = 0;
             val2 = 0;
