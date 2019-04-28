@@ -6,8 +6,10 @@ import com.company.Simulator.Register;
 import com.company.Simulator.Simulator;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 public class GUI {
 
@@ -70,7 +72,19 @@ public class GUI {
         browse.setBounds(205, 600, 80, 20);
         browse.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Browsing . . .");
+                try {
+                    JFileChooser jf = new JFileChooser();
+                    //jf.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    jf.setAcceptAllFileFilterUsed(false);
+                    FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt");
+                    jf.addChoosableFileFilter(filter);
+                    jf.showOpenDialog(new JLabel("Browse"));//显示打开的文件对话框
+                    File f =  jf.getSelectedFile();//使用文件类获取选择器选择的文件
+                    String s = f.getAbsolutePath();//返回路径名
+                    fileText.setText(s);
+                }catch(NullPointerException ex){
+                    System.out.println("No file selected");
+                }
             }
         });
         load = new JButton("Load");

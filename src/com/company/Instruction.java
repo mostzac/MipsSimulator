@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Instruction {
   String instruction;
   String function;
-  ArrayList vals;
+  ArrayList vals = new ArrayList();
 
   public Instruction(String instruction) {
     this.instruction = instruction;

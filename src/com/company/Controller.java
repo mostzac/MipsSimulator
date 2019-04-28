@@ -28,7 +28,7 @@ public class Controller {
     public void performNextInstruction(Instruction instr) {
         FunctionFactory a = new FunctionFactory();
         Function func = a.factory(instr.getFunction());
-        func.setInstruction(instr);
+        func.handleInstruction(instr);
         func.execute();
     }
 }

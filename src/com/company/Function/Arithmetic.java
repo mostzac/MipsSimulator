@@ -14,6 +14,11 @@ public class Arithmetic implements Function{
 
     }
 
+    @Override
+    public void handleInstruction(Instruction instr) {
+
+    }
+
     public void execute() {
 
     }

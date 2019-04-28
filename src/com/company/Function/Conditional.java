@@ -44,7 +44,6 @@ public class Conditional implements Function {
 
     // constructor
     public Conditional() {
-        handleInstruction();
     }
 
     @Override
@@ -54,7 +53,9 @@ public class Conditional implements Function {
 
 
 
-    private void handleInstruction() {
+    @Override
+    public void handleInstruction(Instruction instr) {
+        setInstruction(instr);
         String function = instr.getFunction();
         ArrayList vals = instr.getVals();
         if (offsetting.contains(function)) {
@@ -77,7 +78,7 @@ public class Conditional implements Function {
                 address = Integer.parseInt(String.valueOf(vals.get(0)));
             }
         } else if (addressing.contains(function)) {
-            offset = Integer.parseInt(String.valueOf(vals.get(1)));
+            address = Integer.parseInt(String.valueOf(vals.get(0)));
         } else {
             val1 = 0;
             val2 = 0;

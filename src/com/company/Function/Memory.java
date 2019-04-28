@@ -50,6 +50,11 @@ public class Memory implements Function{
     }
 
     @Override
+    public void handleInstruction(Instruction instr) {
+
+    }
+
+    @Override
     public void execute() {
 
     }
