@@ -1,33 +1,32 @@
 package com.company.UserInterface;
 
+import com.company.Controller;
+import com.company.Instruction;
 import com.company.Simulator.Register;
 import com.company.Simulator.Simulator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class GUI {
 
-    //Register[] registers;
-    int stepCounter;
+    static Register[] registers;
+    static int stepCounter;
     JFrame frame;
     JLabel label, currentInstruction;
     JTextField fileText;
     JButton browse, load, step, run;
     JRadioButton stepRun, fullRun;
     JTable regTable;
-
-    Simulator simulator;
+    Controller controller;
+    static Instruction[] instructions;
 
     public GUI() {
-        this.simulator = new Simulator();
-        stepCounter = 1;
+        stepCounter = 0;
         setComponents();
         setFrame();
         open();
-        //initialize simulator
     }
 
     private void open() {
@@ -46,7 +45,7 @@ public class GUI {
 
     private void setFrame() {
         frame = new JFrame();
-        frame.setSize(900, 900);
+        frame.setSize(900,900);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
         frame.add(label);
@@ -63,7 +62,7 @@ public class GUI {
 
     private void setComponents() {
         label = new JLabel();
-        label.setBounds(2, 600, 100, 20);
+        label.setBounds(2,600,100,20);
         label.setText("Enter file name:");
         fileText = new JTextField();
         fileText.setBounds(102, 600, 100, 20);
@@ -71,14 +70,23 @@ public class GUI {
         browse.setBounds(205, 600, 80, 20);
         browse.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                browse_program();
-            } //
+                System.out.println("Browsing . . .");
+            }
         });
         load = new JButton("Load");
         load.setBounds(290, 600, 80, 20);
         load.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                load_program();
+                System.out.println("Loading . . .");
+                String file = fileText.getText();
+                try {
+                    controller = new Controller();
+                    controller.setStringFile(file);
+                    instructions = controller.getInstructions();
+                }
+                catch (Exception ex) {
+                    System.err.println("ERROR: File not found.");
+                }
             }
         });
         stepRun = new JRadioButton("Step Run");
@@ -99,14 +107,23 @@ public class GUI {
         step.setBounds(307, 625, 80, 20);
         step.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                step_run();
+                System.out.println("Step " + stepCounter + " . . .");
+                currentInstruction.setText(instructions[stepCounter].getInstruction());
+                controller.performNextInstruction(instructions[stepCounter]);
+                updateTable();
+                stepCounter++;
             }
         });
         run = new JButton("Run");
         run.setBounds(390, 625, 80, 20);
         run.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                complete_run();
+                System.out.println("Running . . .");
+                currentInstruction.setText("Running . . .");
+                for (int i = 0; i < instructions.length; i++) {
+                    controller.performNextInstruction(instructions[i]);
+                }
+                updateTable();
             }
         });
         regTable = new JTable(32, 3);
@@ -119,31 +136,32 @@ public class GUI {
     }
 
     private void setInitVals() {
+        registers = new Register[32];
         for (int i = 0; i < 32; i++) {
-            Register cur = simulator.getRegisterAtIndex(i);
-            regTable.setValueAt(cur.getRegisterName(), i, 0);
-            regTable.setValueAt(cur.getRegisterLocation(), i, 1);
-            regTable.setValueAt(cur.getRegisterValue(), i, 2);
+            registers[i] = new Register("R" + (i+1), Integer.toHexString(i*4), 0);
+            regTable.setValueAt(registers[i].getRegisterName(), i, 0);
+            regTable.setValueAt(registers[i].getRegisterLocation(), i, 1);
+            regTable.setValueAt(registers[i].getRegisterValue(), i, 2);
         }
     }
 
-    private void browse_program() {
-        System.out.println("Browsing . . .");
-    }
-    private void load_program() {
-        System.out.println("Loading . . .");
-    }
-    private void step_run(){
-        System.out.println("Step " + stepCounter + " . . .");
-        currentInstruction.setText("Step " + stepCounter + " . . .");
-        stepCounter++;
-    }
-    private void complete_run(){
-        System.out.println("Running . . .");
-        currentInstruction.setText("Running . . .");
-        stepCounter = 0;
+    private void updateTable() {
+        for (int i = 0; i < 32; i++) {
+            regTable.setValueAt(registers[i].getRegisterName(), i, 0);
+            regTable.setValueAt(registers[i].getRegisterLocation(), i, 1);
+            regTable.setValueAt(registers[i].getRegisterValue(), i, 2);
+        }
     }
 
+    public static void offsetStepCounter(int offset) {
+        stepCounter += offset/4;
+    }
 
+    public static void setStepCounter(int address) {
+        stepCounter = address;
+    }
+
+    public static Register[] getRegisterFile(){return registers;}
+
+    public static void setRegister(int index,int value){registers[index].setRegisterValue(value);}
 }
-

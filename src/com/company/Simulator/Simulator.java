@@ -25,11 +25,7 @@ public class Simulator {
 
     public void run(){
         if(runningType==0){
-            controller.fetch();
-            controller.decode();
-            controller.execute();
-            controller.memoryAccess();
-            controller.writeBack();
+
         }
     }
 

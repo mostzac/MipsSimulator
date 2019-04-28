@@ -1,5 +1,7 @@
 package com.company.Function;
 
+import com.company.Instruction;
+
 public class Memory implements Function{
 
     // constructor
@@ -40,6 +42,11 @@ public class Memory implements Function{
     // MFLO function, move content of LO register into specified register
     public String MFLO() {
         return "A value is moved from LO register";
+    }
+
+    @Override
+    public void setInstruction(Instruction a) {
+
     }
 
     @Override

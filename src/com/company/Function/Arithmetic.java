@@ -1,5 +1,7 @@
 package com.company.Function;
 
+import com.company.Instruction;
+
 public class Arithmetic implements Function{
 
     // constructor
@@ -8,16 +10,18 @@ public class Arithmetic implements Function{
     }
 
     @Override
+    public void setInstruction(Instruction a) {
+
+    }
+
     public void execute() {
 
     }
 
-    @Override
     public void memoryAccess() {
 
     }
 
-    @Override
     public void writeBack() {
 
     }

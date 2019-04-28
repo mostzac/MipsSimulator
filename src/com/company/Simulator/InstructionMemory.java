@@ -9,7 +9,7 @@ public class InstructionMemory {
     public InstructionMemory(String[] instructionSet) {
         int index = 0;
         for(String a:instructionSet){
-            set[index] = new Instruction(a,index);
+            set[index] = new Instruction(a);
             index++;
         }
     }

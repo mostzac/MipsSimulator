@@ -1,82 +1,172 @@
 package com.company.Function;
 
+import com.company.Instruction;
 import com.company.Simulator.Register;
+import com.company.UserInterface.GUI;
+
+import java.util.ArrayList;
 
 public class Conditional implements Function{
 
+    int val1, val2, offset, address;
+    Instruction instr;
+
     // constructor
     public Conditional() {
-        System.out.println("breach instructions are handled.");
-    }
-
-    // BEQ fucntion, branches if two register are equal
-    public String BEQ(Register r1, Register r2) {
-        return "branches if r1 == r2";
-    }
-
-    // BGEZ function, branchs if register >= 0
-    public String BGEZ(Register r1) {
-        return "branches if r1 >= 0";
-    }
-
-    // BGEZAL function, branches if the register >= zero and saves the return address in $31
-    public String BGEZAL(Register r1) {
-        return "branches if r1 >= 0 and save return address to register $31";
-    }
-
-    // BGTZ function, branches if the register > 0
-    public String BGTZ(Register r1) {
-        return "branches if r1 > 0";
-    }
-
-    // BLEZ fucntion, breanches if the register <= 0
-    public String BLEZ(Register r1) {
-        return "branches if r1 <= 0";
-    }
-
-    // BLTZ fucntion, breanches if the register < 0
-    public String BLTZ(Register r1) {
-        return "branches if r1 < 0";
-    }
-
-    // BLTZAL function, branches if the register < zero and saves the return address in $31
-    public String BLTZAL(Register r1) {
-        return "branches if r1 < 0 and save return address to register $31";
-    }
-
-    // BNE fucntion, branches if two register are not equal
-    public String BNQ(Register r1, Register r2) {
-        return "branches if r1 != r2";
-    }
-
-    // J fucntion, jump to spicified address
-    public String J(String address) {
-        return "jump to " + address + " address";
-    }
-
-    // JAL fucntion, jump to spicified address and store return address into $31
-    public String JAL(String address) {
-        return "jump to " + address + " address and store return address to $31";
-    }
-
-    // JR function, jump to address which is stored at register
-    public String JR(Register r1) {
-        return "jump to address which is stored at r1";
-    }
-
-    // NOOP fucntion, do nothing
-    public String NOOP() {
-        return "do nothing";
-    }
-
-    // SYSCALL function, generates interrupt
-    public String SYSCALL() {
-        return "An interrupt is generated";
+        handleInstruction();
     }
 
     @Override
-    public void execute() {
+    public void setInstruction(Instruction instr) {
+        this.instr = instr;
+    }
 
+    private void handleInstruction() {
+      String function = instr.getFunction();
+      ArrayList vals = instr.getVals();
+      if (offsetting.contains(function)) {
+        if (vals.size() == 2) {
+          String reg1 = vals.get(0).toString();
+          Register register = registers[Integer.parseInt(reg1.indexOf(1))];
+        }
+      }
+      else if (addressing.contains(function)) {
+
+      }
+      else {
+        val1 = 0;
+        val2 = 0;
+        offset = 0;
+        address = 0;
+      }
+    }
+
+    // BEQ fucntion, branches if two register are equal
+    private void BEQ() {
+        if (val1 == val2) {
+          GUI.offsetStepCounter(offset);
+        }
+    }
+
+    // BGEZ function, branchs if register >= 0
+    private void BGEZ() {
+      if (val1 >= 0) {
+        GUI.offsetStepCounter(offset);
+      }
+    }
+
+    // BGEZAL function, branches if the register >= zero and saves the return address in $31
+    private void BGEZAL() {
+      if (val1 >= 0) {
+        GUI.offsetStepCounter(offset);
+          System.out.println("BGEZAL");
+      }
+    }
+
+    // BGTZ function, branches if the register > 0
+    private void BGTZ() {
+      if (val1 > 0) {
+        GUI.offsetStepCounter(offset);
+      }
+    }
+
+    // BLEZ fucntion, breanches if the register <= 0
+    private void BLEZ() {
+      if (val1 <= 0) {
+        GUI.offsetStepCounter(offset);
+      }
+    }
+
+    // BLTZ fucntion, breanches if the register < 0
+    private void BLTZ() {
+      if (val1 < 0) {
+        GUI.offsetStepCounter(offset);
+      }
+    }
+
+    // BLTZAL function, branches if the register < zero and saves the return address in $31
+    private void BLTZAL() {
+      if (val1 < 0) {
+        GUI.offsetStepCounter(offset);
+      }
+    }
+
+    // BNE fucntion, branches if two register are not equal
+    private void BNQ() {
+      if (val1 != val2) {
+        GUI.offsetStepCounter(offset);
+      }
+    }
+
+    // J fucntion, jump to spicified address
+    private void J() {
+      GUI.setStepCounter(address);
+    }
+
+    // JAL fucntion, jump to spicified address and store return address into $31
+    private void JAL() {
+      GUI.setStepCounter(address);
+        System.out.println("Jal");
+    }
+
+    // JR function, jump to address which is stored at register
+    private void JR() {
+      GUI.setStepCounter(val1);
+    }
+
+    // NOOP fucntion, do nothing
+    private void NOOP() {
+      return;
+    }
+
+    // SYSCALL function, generates interrupt
+    private void SYSCALL() {
+      System.out.println("INTERRUPT: syscall operation.");
+    }
+
+
+    @Override
+    public void execute() {
+      int index = conditional.indexOf(function);
+      switch(index) {
+        case 0:
+          BEQ();
+          break;
+        case 1:
+          BGEZ();
+          break;
+        case 2:
+          BGEZAL();
+          break;
+        case 3:
+          BGTZ();
+          break;
+        case 4:
+          BLEZ();
+          break;
+        case 5:
+          BLTZ();
+          break;
+        case 6:
+          BLTZAL();
+          break;
+        case 7:
+          BNQ();
+          break;
+        case 8:
+          J();
+          break;
+        case 9:
+          JAL();
+          break;
+        case 10:
+          NOOP();
+          break;
+        case 11:
+          SYSCALL();
+          break;
+        default: System.out.println("Instruction not found");
+      }
     }
 
     @Override
