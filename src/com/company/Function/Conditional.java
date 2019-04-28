@@ -5,11 +5,42 @@ import com.company.Simulator.Register;
 import com.company.UserInterface.GUI;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Conditional implements Function {
 
     int val1, val2, offset, address;
     Instruction instr;
+    ArrayList<String> conditional = new ArrayList<String>(){{
+        add("BEQ");
+        add("BGEZ");
+        add("BGEZAL");
+        add("BGTZ");
+        add("BLEZ");
+        add("BLTZ");
+        add("BLTZAL");
+        add("BNQ");
+        add("J");
+        add("JAL");
+        add("JR");
+        add("NOOP");
+        add("SYSCALL");
+    }};
+    ArrayList<String> offsetting = new ArrayList<String>(){{
+        add("BEQ");
+        add("BGEZ");
+        add("BGEZAL");
+        add("BGTZ");
+        add("BLEZ");
+        add("BLTZ");
+        add("BLTZAL");
+        add("BNQ");
+    }};
+    ArrayList<String> addressing = new ArrayList<String>(){{
+        add("J");
+        add("JAL");
+    }};
+
 
     // constructor
     public Conditional() {
@@ -20,6 +51,8 @@ public class Conditional implements Function {
     public void setInstruction(Instruction instr) {
         this.instr = instr;
     }
+
+
 
     private void handleInstruction() {
         String function = instr.getFunction();
@@ -56,7 +89,7 @@ public class Conditional implements Function {
     // BGEZAL function, branches if the register >= zero and saves the return address in $31
     private void BGEZAL() {
         if (val1 >= 0) {
-            GUI.setRegister(31, GUI.getSetpCounter()+1);
+            GUI.setRegister(31, GUI.getStepCounter()+1);
             GUI.offsetStepCounter(offset);
         }
     }
@@ -85,7 +118,7 @@ public class Conditional implements Function {
     // BLTZAL function, branches if the register < zero and saves the return address in $31
     private void BLTZAL() {
         if (val1 < 0) {
-            GUI.setRegister(31, GUI.getSetpCounter()+1);
+            GUI.setRegister(31, GUI.getStepCounter()+1);
             GUI.offsetStepCounter(offset);
 
         }
@@ -105,7 +138,7 @@ public class Conditional implements Function {
 
     // JAL fucntion, jump to spicified address and store return address into $31
     private void JAL() {
-        GUI.setRegister(31, GUI.getSetpCounter()+1);
+        GUI.setRegister(31, GUI.getStepCounter()+1);
         GUI.setStepCounter(address);
     }
 
@@ -127,7 +160,7 @@ public class Conditional implements Function {
 
     @Override
     public void execute() {
-        int index = conditional.indexOf(function);
+        int index = conditional.indexOf(instr.getFunction());
         switch (index) {
             case 0:
                 BEQ();
@@ -160,9 +193,12 @@ public class Conditional implements Function {
                 JAL();
                 break;
             case 10:
-                NOOP();
+                JR();
                 break;
             case 11:
+                NOOP();
+                break;
+            case 12:
                 SYSCALL();
                 break;
             default:

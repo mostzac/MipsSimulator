@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MipsSimulator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MipsSimulator_jar</output-path>
+    <root id="archive" name="MipsSimulator.jar">
+      <element id="module-output" name="MipsSimulator" />
+    </root>
+  </artifact>
+</component>

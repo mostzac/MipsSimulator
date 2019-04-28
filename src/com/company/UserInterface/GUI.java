@@ -165,5 +165,5 @@ public class GUI {
 
     public static void setRegister(int index,int value){registers[index].setRegisterValue(value);}
 
-    public static int getSetpCounter(){return stepCounter;}
+    public static int getStepCounter(){return stepCounter;}
 }
