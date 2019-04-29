@@ -187,6 +187,7 @@ public class Conditional implements Function {
 
     // NOOP fucntion, do nothing
     private void NOOP() {
+        GUI.StepCounterIncrease();
         return;
     }
 
