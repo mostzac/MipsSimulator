@@ -1,15 +1,16 @@
 package com.company;
 
-import com.company.Function.*;
-import com.company.UserInterface.GUI;
+import com.company.Function.Function;
+import com.company.Function.FunctionFactory;
 
 public class Controller {
     String stringFile;
-//    Register[] regs;
+    //    Register[] regs;
     FileParser file;
     Instruction[] instructionList;
 
-    public Controller() {}
+    public Controller() {
+    }
 
     public void setStringFile(String stringFile) {
         this.stringFile = stringFile;

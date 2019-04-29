@@ -5,13 +5,12 @@ import com.company.Simulator.Register;
 import com.company.UserInterface.GUI;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Conditional implements Function {
 
     int val1, val2, offset, address;
     Instruction instr;
-    ArrayList<String> conditional = new ArrayList<String>(){{
+    ArrayList<String> conditional = new ArrayList<String>() {{
         add("BEQ");
         add("BGEZ");
         add("BGEZAL");
@@ -19,14 +18,14 @@ public class Conditional implements Function {
         add("BLEZ");
         add("BLTZ");
         add("BLTZAL");
-        add("BNQ");
+        add("BNE");
         add("J");
         add("JAL");
         add("JR");
         add("NOOP");
         add("SYSCALL");
     }};
-    ArrayList<String> offsetting = new ArrayList<String>(){{
+    ArrayList<String> offsetting = new ArrayList<String>() {{
         add("BEQ");
         add("BGEZ");
         add("BGEZAL");
@@ -34,9 +33,9 @@ public class Conditional implements Function {
         add("BLEZ");
         add("BLTZ");
         add("BLTZAL");
-        add("BNQ");
+        add("BNE");
     }};
-    ArrayList<String> addressing = new ArrayList<String>(){{
+    ArrayList<String> addressing = new ArrayList<String>() {{
         add("J");
         add("JAL");
     }};
@@ -52,7 +51,6 @@ public class Conditional implements Function {
     }
 
 
-
     @Override
     public void handleInstruction(Instruction instr) {
         setInstruction(instr);
@@ -61,20 +59,20 @@ public class Conditional implements Function {
         if (offsetting.contains(function)) {
             if (vals.size() == 3) {
                 String reg1 = vals.get(0).toString();
-                Register register = GUI.registers[Integer.parseInt(reg1.substring(1))];
+                Register register = GUI.registers[Integer.parseInt(reg1.substring(1)) - 1];
                 val1 = register.getRegisterValue();
                 String reg2 = vals.get(1).toString();
-                register = GUI.registers[Integer.parseInt(reg2.substring(1))];
+                register = GUI.registers[Integer.parseInt(reg2.substring(1)) - 1];
                 val2 = register.getRegisterValue();
                 offset = Integer.parseInt(String.valueOf(vals.get(2)));
             }
-            if(vals.size()==2){
+            if (vals.size() == 2) {
                 String reg1 = vals.get(0).toString();
-                Register register = GUI.registers[Integer.parseInt(reg1.substring(1))];
+                Register register = GUI.registers[Integer.parseInt(reg1.substring(1)) - 1];
                 val1 = register.getRegisterValue();
                 offset = Integer.parseInt(String.valueOf(vals.get(1)));
             }
-            if(vals.size()==1){
+            if (vals.size() == 1) {
                 address = Integer.parseInt(String.valueOf(vals.get(0)));
             }
         } else if (addressing.contains(function)) {
@@ -91,8 +89,7 @@ public class Conditional implements Function {
     private void BEQ() {
         if (val1 == val2) {
             GUI.offsetStepCounter(offset);
-        }
-        else{
+        } else {
             GUI.StepCounterIncrease();
         }
     }
@@ -101,8 +98,7 @@ public class Conditional implements Function {
     private void BGEZ() {
         if (val1 >= 0) {
             GUI.offsetStepCounter(offset);
-        }
-        else{
+        } else {
             GUI.StepCounterIncrease();
         }
     }
@@ -110,10 +106,9 @@ public class Conditional implements Function {
     // BGEZAL function, branches if the register >= zero and saves the return address in $31
     private void BGEZAL() {
         if (val1 >= 0) {
-            GUI.setRegister(31, GUI.getStepCounter()+1);
+            GUI.setRegister(31, GUI.getStepCounter() + 1);
             GUI.offsetStepCounter(offset);
-        }
-        else{
+        } else {
             GUI.StepCounterIncrease();
         }
     }
@@ -122,8 +117,7 @@ public class Conditional implements Function {
     private void BGTZ() {
         if (val1 > 0) {
             GUI.offsetStepCounter(offset);
-        }
-        else{
+        } else {
             GUI.StepCounterIncrease();
         }
     }
@@ -132,8 +126,7 @@ public class Conditional implements Function {
     private void BLEZ() {
         if (val1 <= 0) {
             GUI.offsetStepCounter(offset);
-        }
-        else{
+        } else {
             GUI.StepCounterIncrease();
         }
     }
@@ -142,8 +135,7 @@ public class Conditional implements Function {
     private void BLTZ() {
         if (val1 < 0) {
             GUI.offsetStepCounter(offset);
-        }
-        else{
+        } else {
             GUI.StepCounterIncrease();
         }
     }
@@ -151,20 +143,18 @@ public class Conditional implements Function {
     // BLTZAL function, branches if the register < zero and saves the return address in $31
     private void BLTZAL() {
         if (val1 < 0) {
-            GUI.setRegister(31, GUI.getStepCounter()+1);
+            GUI.setRegister(31, GUI.getStepCounter() + 1);
             GUI.offsetStepCounter(offset);
-        }
-        else{
+        } else {
             GUI.StepCounterIncrease();
         }
     }
 
     // BNE fucntion, branches if two register are not equal
-    private void BNQ() {
+    private void BNE() {
         if (val1 != val2) {
             GUI.offsetStepCounter(offset);
-        }
-        else{
+        } else {
             GUI.StepCounterIncrease();
         }
     }
@@ -176,7 +166,7 @@ public class Conditional implements Function {
 
     // JAL fucntion, jump to spicified address and store return address into $31
     private void JAL() {
-        GUI.setRegister(31, GUI.getStepCounter()+1);
+        GUI.setRegister(31, GUI.getStepCounter() + 1);
         GUI.setStepCounter(address);
     }
 
@@ -223,7 +213,7 @@ public class Conditional implements Function {
                 BLTZAL();
                 break;
             case 7:
-                BNQ();
+                BNE();
                 break;
             case 8:
                 J();

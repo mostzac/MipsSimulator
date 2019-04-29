@@ -7,7 +7,7 @@ public class DataMemory {
         this.dataMemory = new int[size];
     }
 
-    public int getDataAtIndex(int index){
+    public int getDataAtIndex(int index) {
         return this.dataMemory[index];
     }
 }

@@ -8,13 +8,13 @@ public class InstructionMemory {
 
     public InstructionMemory(String[] instructionSet) {
         int index = 0;
-        for(String a:instructionSet){
+        for (String a : instructionSet) {
             set[index] = new Instruction(a);
             index++;
         }
     }
 
-    public Instruction getInstructionAtIndex(int index){
+    public Instruction getInstructionAtIndex(int index) {
         return this.set[index];
     }
 

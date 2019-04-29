@@ -2,7 +2,7 @@ package com.company.Function;
 
 import com.company.Instruction;
 
-public class Memory implements Function{
+public class Memory implements Function {
 
     // constructor
     public Memory() {

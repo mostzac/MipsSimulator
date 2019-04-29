@@ -3,12 +3,12 @@ package com.company.UserInterface;
 import com.company.Controller;
 import com.company.Instruction;
 import com.company.Simulator.Register;
-import com.company.Simulator.Simulator;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 public class GUI {
@@ -47,7 +47,7 @@ public class GUI {
 
     private void setFrame() {
         frame = new JFrame();
-        frame.setSize(900,900);
+        frame.setSize(900, 900);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
         frame.add(label);
@@ -64,7 +64,7 @@ public class GUI {
 
     private void setComponents() {
         label = new JLabel();
-        label.setBounds(2,600,100,20);
+        label.setBounds(2, 600, 100, 20);
         label.setText("Enter file name:");
         fileText = new JTextField();
         fileText.setBounds(102, 600, 100, 20);
@@ -79,10 +79,10 @@ public class GUI {
                     FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt");
                     jf.addChoosableFileFilter(filter);
                     jf.showOpenDialog(new JLabel("Browse"));//显示打开的文件对话框
-                    File f =  jf.getSelectedFile();//使用文件类获取选择器选择的文件
+                    File f = jf.getSelectedFile();//使用文件类获取选择器选择的文件
                     String s = f.getAbsolutePath();//返回路径名
                     fileText.setText(s);
-                }catch(NullPointerException ex){
+                } catch (NullPointerException ex) {
                     System.out.println("No file selected");
                 }
             }
@@ -97,8 +97,7 @@ public class GUI {
                     controller = new Controller();
                     controller.setStringFile(file);
                     instructions = controller.getInstructions();
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     System.err.println("ERROR: File not found.");
                 }
             }
@@ -121,23 +120,27 @@ public class GUI {
         step.setBounds(307, 625, 80, 20);
         step.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Step " + stepCounter + " . . .");
-                currentInstruction.setText(instructions[stepCounter].getInstruction());
-                controller.performNextInstruction(instructions[stepCounter]);
-                updateTable();
-//                stepCounter++;
+                if (stepCounter < instructions.length) {
+                    System.out.println("Step " + stepCounter + " . . .");
+                    currentInstruction.setText(instructions[stepCounter].getInstruction());
+                    controller.performNextInstruction(instructions[stepCounter]);
+                    updateTable();
+                } else {
+                    System.out.println("Finished");
+                }
             }
         });
         run = new JButton("Run");
         run.setBounds(390, 625, 80, 20);
         run.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Running . . .");
-                currentInstruction.setText("Running . . .");
-                for (int i = 0; i < instructions.length; i++) {
-                    controller.performNextInstruction(instructions[i]);
+                while (stepCounter < instructions.length) {
+                    System.out.println("Running " + stepCounter + " . . .");
+                    // currentInstruction.setText(instructions[stepCounter].getInstruction());
+                    controller.performNextInstruction(instructions[stepCounter]);
+                    updateTable();
                 }
-                updateTable();
+                System.out.println("Finished");
             }
         });
         regTable = new JTable(32, 3);
@@ -152,7 +155,7 @@ public class GUI {
     private void setInitVals() {
         registers = new Register[32];
         for (int i = 0; i < 32; i++) {
-            registers[i] = new Register("R" + (i+1), Integer.toHexString(i*4), 0);
+            registers[i] = new Register("R" + (i + 1), Integer.toHexString(i * 4), 0);
             regTable.setValueAt(registers[i].getRegisterName(), i, 0);
             regTable.setValueAt(registers[i].getRegisterLocation(), i, 1);
             regTable.setValueAt(registers[i].getRegisterValue(), i, 2);
@@ -168,18 +171,27 @@ public class GUI {
     }
 
     public static void offsetStepCounter(int offset) {
-        stepCounter += offset/4;
+        stepCounter += offset / 4;
     }
 
     public static void setStepCounter(int address) {
         stepCounter = address;
     }
 
-    public static Register[] getRegisterFile(){return registers;}
+    public static Register[] getRegisterFile() {
+        return registers;
+    }
 
-    public static void setRegister(int index,int value){registers[index].setRegisterValue(value);}
+    public static void setRegister(int index, int value) {
+        registers[index].setRegisterValue(value);
+    }
 
-    public static int getStepCounter(){return stepCounter;}
+    public static int getStepCounter() {
+        return stepCounter;
+    }
 
-    public static void StepCounterIncrease(){stepCounter++;}
+    public static void StepCounterIncrease() {
+        stepCounter++;
+    }
+
 }
