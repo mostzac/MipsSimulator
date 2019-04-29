@@ -10,4 +10,8 @@ public class DataMemory {
     public int getDataAtIndex(int index) {
         return this.dataMemory[index];
     }
+
+    public void setDataAtIndex(int index, int value) {
+        this.dataMemory[index] = value;
+    }
 }

@@ -31,6 +31,7 @@ public class FunctionFactory {
         add("XORI");
     }};
     ArrayList<String> memory = new ArrayList<String>() {{
+        add("LI");
         add("LHI");
         add("LLO");
         add("LB");

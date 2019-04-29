@@ -53,7 +53,7 @@ public class Arithmetic implements Function {
     @Override
     public void handleInstruction(Instruction instr) {
         setInstruction(instr);
-        String function = instr.getFunction();
+        //String function = instr.getFunction();
         ArrayList vals = instr.getVals();
         if (vals.size() == 3) {
             String reg3 = vals.get(0).toString();
@@ -72,16 +72,30 @@ public class Arithmetic implements Function {
             } else {
                 val2 = Integer.parseInt(reg2);
             }
-            String a = reg3.substring(1);
-
             if (reg3.substring(0, 1).equals("R")) {
                 this.storeRegister = GUI.registers[Integer.parseInt(reg3.substring(1)) - 1];
+            }
+        } else if (vals.size() == 2) {
+            String reg1 = vals.get(0).toString();
+            String reg2 = vals.get(1).toString();
+            if (reg2.substring(0, 1).equals("R")) {
+                Register register = GUI.registers[Integer.parseInt(reg2.substring(1)) - 1];
+                val2 = register.getRegisterValue();
+            } else {
+                val2 = Integer.parseInt(reg2);
+            }
+            if (reg1.substring(0, 1).equals("R")) {
+                Register register = GUI.registers[Integer.parseInt(reg1.substring(1)) - 1];
+                val1 = register.getRegisterValue();
+            } else {
+                val1 = Integer.parseInt(reg1);
             }
         } else {
             val1 = 0;
             val2 = 0;
             val3 = 0;
         }
+
     }
 
     private void ADD() {
@@ -100,7 +114,8 @@ public class Arithmetic implements Function {
     }
 
     private void DIV() {
-        storeRegister.setRegisterValue(val1 / val2);
+        GUI.setLOValue(val1 / val2);
+        GUI.setHIValue(val1 % val2);
         GUI.StepCounterIncrease();
     }
 

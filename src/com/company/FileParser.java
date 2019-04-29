@@ -28,7 +28,7 @@ public class FileParser {
             dataString = sb.toString();
             br.close();
         } catch (Exception e) {
-            System.err.println("File does not exist or was not found.");
+            System.out.println("File does not exist or was not found.");
         }
 
         dataList = dataString.split("\\n");
